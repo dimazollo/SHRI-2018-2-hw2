@@ -87,20 +87,26 @@ export default class Gesture {
 
     if (this.prevPinchDistance) {
       const delta = newPinchDistance - this.prevPinchDistance;
-      const aspectRatio = 2560 / 1600;
-      this.sizeParams = this.sizeParams.add({x: delta, y: delta / aspectRatio});
+      const initialWidth = 2560;
+
+      const k = 5; // magic coefficient to make scale faster;
+      const relativeSizeChange = k * delta / initialWidth;
+
+      this.scaleParams += relativeSizeChange;
     }
     // update prevPinchDistance
     this.prevPinchDistance = newPinchDistance;
   }
 
   handleRotate(currentPointer, secondPointer) {
-    const point = currentPointer.prevPoint.substract(secondPointer.prevPoint);
-    const newRotateAngle = Math.atan2(point.y, point.x);
+    const vector = currentPointer.prevPoint.substract(secondPointer.prevPoint);
+    const newRotateAngle = Math.atan2(vector.y, vector.x);
 
     if (this.prevRotateAngle) {
       const delta = newRotateAngle - this.prevRotateAngle;
-      this.brightnessParams += delta;
+
+      const k = 0.2;// magic coefficient to slow change of brightness
+      this.brightnessParams += k * delta;
     }
 
     this.prevRotateAngle = newRotateAngle;

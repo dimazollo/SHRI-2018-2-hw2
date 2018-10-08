@@ -43,8 +43,12 @@ camera.addEventListener('pointermove', (event) => {
   gesture.handlePointerMove(event);
   const translate = gesture.translateParams;
   camera.style.backgroundPosition = `${translate.x}px ${translate.y}px`;
-  const size = gesture.sizeParams;
-  camera.style.backgroundSize = `${size.x}px ${size.y}px`;
+  // const size = gesture.sizeParams;
+  // camera.style.backgroundSize = `${size.x}px ${size.y}px`;
+
+  const scale = gesture.scaleParams;
+  camera.style.transform = `scale(${scale})`;
+
   const brightness = gesture.brightnessParams;
   camera.style.filter = `brightness(${brightness})`;
   // debugInfo.textContent += event.pointerId + ':' + event.type + '\n';
