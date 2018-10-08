@@ -64,6 +64,10 @@ export default class Gesture {
 
   releasePointer ({ pointerId }) {
     this.pointers = this.pointers.filter(pointer => pointer.id !== pointerId);
+    if (this.pointers.length < 2) {
+      this.prevPinchDistance = null;
+      this.prevRotateAngle = null;
+    }
   }
 
   getPointer({ pointerId }) {
