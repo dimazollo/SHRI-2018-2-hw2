@@ -94,7 +94,10 @@ export default class Gesture {
       const k = 5; // magic coefficient to make scale faster;
       const relativeSizeChange = k * delta / initialWidth;
 
-      this.scaleParams += relativeSizeChange;
+      const threshold = 0.01;
+      if (Math.abs(relativeSizeChange) > threshold) {
+        this.scaleParams += relativeSizeChange;
+      }
     }
     // update prevPinchDistance
     this.prevPinchDistance = newPinchDistance;
@@ -108,7 +111,12 @@ export default class Gesture {
       const delta = newRotateAngle - this.prevRotateAngle;
 
       const k = 0.2;// magic coefficient to slow change of brightness
-      this.brightnessParams += k * delta;
+      const angleChange = k * delta;
+
+      const threshold = 0.01;
+      if (Math.abs(angleChange) > threshold) {
+        this.brightnessParams += angleChange;
+      }
     }
 
     this.prevRotateAngle = newRotateAngle;
