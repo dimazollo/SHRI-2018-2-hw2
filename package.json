@@ -1,0 +1,17 @@
+{
+  "name": "SHRI-2018-2-hw2",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": "https://github.com/dimazollo/SHRI-2018-2-hw2.git",
+  "author": "Dmitry Volovod <dimazoll@shri2018.yaconnect.com>",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint src/script"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "eslint": "^5.6.1",
+    "eslint-config-google": "^0.10.0"
+  }
+}

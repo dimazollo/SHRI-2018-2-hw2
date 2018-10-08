@@ -1,0 +1,27 @@
+.camera-view {
+  width: 100%;
+  max-width: 640px;
+  height: 480px;
+}
+
+.camera-view__image {
+  position: absolute;
+  background-size: 2560px 1600px;
+  width: 2560px;
+  height: 1600px;
+}
+
+.camera-view__container {
+  width: 600px;
+  height: 400px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.debug-info {
+  min-width: 300px;
+  min-height: 500px;
+}
