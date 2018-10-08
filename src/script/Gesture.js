@@ -6,12 +6,12 @@ export default class Gesture {
     this.pointers = [];
     this.translateParams = new Point({x: 0, y: 0});
 
-    // this.sizeParams = new Point({x: 2560, y: 1600});
     this._scaleParams = 1.0;
     this._brightnessParams = 1.0;
 
     this.prevPinchDistance = null;
     this.prevRotateAngle = null;
+
   }
 
   handlePointerEvent(event) {
@@ -94,10 +94,7 @@ export default class Gesture {
       const k = 5; // magic coefficient to make scale faster;
       const relativeSizeChange = k * delta / initialWidth;
 
-      const threshold = 0.01;
-      if (Math.abs(relativeSizeChange) > threshold) {
-        this.scaleParams += relativeSizeChange;
-      }
+      this.scaleParams += relativeSizeChange;
     }
     // update prevPinchDistance
     this.prevPinchDistance = newPinchDistance;
@@ -113,10 +110,7 @@ export default class Gesture {
       const k = 0.2;// magic coefficient to slow change of brightness
       const angleChange = k * delta;
 
-      const threshold = 0.01;
-      if (Math.abs(angleChange) > threshold) {
-        this.brightnessParams += angleChange;
-      }
+      this.brightnessParams += angleChange;
     }
 
     this.prevRotateAngle = newRotateAngle;

@@ -5,24 +5,28 @@ import Point from './Point';
 const cameraContainer = document.querySelector('.camera-view__container');
 const cameraImage = document.querySelector('.camera-view__image');
 const bar = document.querySelector('.bar');
-const debugInfo = document.querySelector('.debug-info');
+
+const scaleBlock = document.querySelector('#scale');
+const brightnessBlock = document.querySelector('#brightness');
 
 const gesture = new Gesture();
 
+// FAKE pointer for debugging
 const myPointer = {
   id: 10000,
-  startPoint: new Point({x: 409, y: 249}),
-  prevPoint: new Point({x: 409, y: 249}),
+  startPoint: new Point({x: 400, y: 250}),
+  prevPoint: new Point({x: 400, y: 250}),
   prevTs: Date.now()
 };
 // gesture.pointers.push(myPointer);
 
+const initialImageWidth = cameraImage.offsetWidth;
+
 function calcBarPosition() {
-  const imageWidth = 2560;
   const xTranslate = gesture.translateParams.x;
   const containerWidth = cameraContainer.offsetWidth;
-  const position = ((imageWidth / 2 + xTranslate)
-    / imageWidth * containerWidth - bar.style.width / 2) % containerWidth;
+  const position = ((initialImageWidth / 2 + xTranslate)
+    / initialImageWidth * containerWidth - bar.style.width / 2) % containerWidth;
 
   if (position < 0) {
     return position + containerWidth
@@ -40,6 +44,7 @@ cameraImage.addEventListener('pointerdown', (event) => {
 
 cameraImage.addEventListener('pointermove', (event) => {
   gesture.handlePointerMove(event);
+
   const translate = gesture.translateParams;
   cameraImage.style.backgroundPosition = `${translate.x}px ${translate.y}px`;
 
@@ -51,7 +56,8 @@ cameraImage.addEventListener('pointermove', (event) => {
 
   bar.style.left = calcBarPosition() + 'px';
 
-  // debugInfo.textContent += event.pointerId + ':' + event.type + '\n';
+  scaleBlock.textContent = Math.floor(scale * 100) + '%';
+  brightnessBlock.textContent = Math.floor(brightness * 100) + '%';
 });
 
 cameraImage.addEventListener('pointerup', (event) => {
