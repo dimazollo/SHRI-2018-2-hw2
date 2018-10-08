@@ -49,7 +49,7 @@ export default class Gesture {
         this.handlePinch(currentPointer, secondPointer);
 
         // rotate
-        this.handleRotate(currentPointer, secondPointer);
+        this.handleRotate(this.pointers[0], this.pointers[1]);
       }
       // update relevant pointer with event coordinates
       currentPointer.update(event);
