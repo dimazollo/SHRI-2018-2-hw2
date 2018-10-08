@@ -5,8 +5,10 @@ export default class Gesture {
   constructor() {
     this.pointers = [];
     this.translateParams = new Point({x: 0, y: 0});
-    this.sizeParams = new Point({x: 2560, y: 1600});
-    this.brightnessParams = 1.0;
+
+    // this.sizeParams = new Point({x: 2560, y: 1600});
+    this._scaleParams = 1.0;
+    this._brightnessParams = 1.0;
 
     this.prevPinchDistance = null;
     this.prevRotateAngle = null;
@@ -111,4 +113,25 @@ export default class Gesture {
 
     this.prevRotateAngle = newRotateAngle;
   }
+
+  get scaleParams() {
+    return this._scaleParams;
+  }
+
+  set scaleParams(value) {
+    if (value > 0.3 && value < 2) {
+      this._scaleParams = value;
+    }
+  }
+
+  get brightnessParams() {
+    return this._brightnessParams;
+  }
+
+  set brightnessParams(value) {
+    if (value > 0.5 && value < 2) {
+      this._brightnessParams = value;
+    }
+  }
+
 }
