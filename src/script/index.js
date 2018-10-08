@@ -11,7 +11,7 @@ const brightnessBlock = document.querySelector('#brightness');
 
 const gesture = new Gesture();
 
-// FAKE pointer for debugging
+// fake pointer for debugging
 const myPointer = {
   id: 10000,
   startPoint: new Point({x: 400, y: 250}),
@@ -22,11 +22,12 @@ const myPointer = {
 
 const initialImageWidth = cameraImage.offsetWidth;
 
+// Function to calculate position of "scroll-bar" in bottom of the image
 function calcBarPosition() {
   const xTranslate = gesture.translateParams.x;
   const containerWidth = cameraContainer.offsetWidth;
   const position = ((initialImageWidth / 2 + xTranslate)
-    / initialImageWidth * containerWidth - bar.style.width / 2) % containerWidth;
+    / initialImageWidth * containerWidth - bar.offsetWidth / 2) % containerWidth;
 
   if (position < 0) {
     return position + containerWidth
@@ -35,8 +36,18 @@ function calcBarPosition() {
   }
 }
 
+function calcBarWidth() {
+  const containerWidth = cameraContainer.offsetWidth;
+  const imageWidth = initialImageWidth * gesture.scaleParam;
+  const barWidth = containerWidth / imageWidth * containerWidth;
+  return barWidth;
+}
+
+// Set initial position to "scroll-bar"
+bar.style.width = calcBarWidth() + 'px';
 bar.style.left = calcBarPosition() + 'px';
 
+// add listeners for pointer events
 cameraImage.addEventListener('pointerdown', (event) => {
   cameraImage.setPointerCapture(event.pointerId);
   gesture.handlePointerDown(event);
@@ -48,12 +59,13 @@ cameraImage.addEventListener('pointermove', (event) => {
   const translate = gesture.translateParams;
   cameraImage.style.backgroundPosition = `${translate.x}px ${translate.y}px`;
 
-  const scale = gesture.scaleParams;
+  const scale = gesture.scaleParam;
   cameraImage.style.transform = `scale(${scale})`;
 
-  const brightness = gesture.brightnessParams;
+  const brightness = gesture.brightnessParam;
   cameraImage.style.filter = `brightness(${brightness})`;
 
+  bar.style.width = calcBarWidth() + 'px';
   bar.style.left = calcBarPosition() + 'px';
 
   scaleBlock.textContent = Math.floor(scale * 100) + '%';

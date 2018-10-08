@@ -6,8 +6,8 @@ export default class Gesture {
     this.pointers = [];
     this.translateParams = new Point({x: 0, y: 0});
 
-    this._scaleParams = 1.0;
-    this._brightnessParams = 1.0;
+    this._scaleParam = 1.0;
+    this._brightnessParam = 1.0;
 
     this.prevPinchDistance = null;
     this.prevRotateAngle = null;
@@ -33,22 +33,19 @@ export default class Gesture {
     const currentPointer = this.getPointer(event);
 
     if (currentPointer == null) {
-      // currentPointer.update(event);
       return;
     } else {
-
+      // one pointer is active
       if (this.pointers.length === 1) {
         const newPoint = new Point(event);
         const delta = newPoint.substract(currentPointer.prevPoint);
         this.translateParams = this.translateParams.add(delta);
-
+      // two pointers is active
       } else if (this.pointers.length === 2) {
         const secondPointer = this.pointers
           .filter(pointer => pointer.id !== event.pointerId)[0];
 
         this.handlePinch(currentPointer, secondPointer);
-
-        // rotate
         this.handleRotate(this.pointers[0], this.pointers[1]);
       }
       // update relevant pointer with event coordinates
@@ -94,7 +91,7 @@ export default class Gesture {
       const k = 5; // magic coefficient to make scale faster;
       const relativeSizeChange = k * delta / initialWidth;
 
-      this.scaleParams += relativeSizeChange;
+      this.scaleParam += relativeSizeChange;
     }
     // update prevPinchDistance
     this.prevPinchDistance = newPinchDistance;
@@ -110,29 +107,31 @@ export default class Gesture {
       const k = 0.2;// magic coefficient to slow change of brightness
       const angleChange = k * delta;
 
-      this.brightnessParams += angleChange;
+      this.brightnessParam += angleChange;
     }
 
     this.prevRotateAngle = newRotateAngle;
   }
 
-  get scaleParams() {
-    return this._scaleParams;
+  get scaleParam() {
+    return this._scaleParam;
   }
 
-  set scaleParams(value) {
+  set scaleParam(value) {
+    // check limits for the value
     if (value > 0.3 && value < 2) {
-      this._scaleParams = value;
+      this._scaleParam = value;
     }
   }
 
-  get brightnessParams() {
-    return this._brightnessParams;
+  get brightnessParam() {
+    return this._brightnessParam;
   }
 
-  set brightnessParams(value) {
+  set brightnessParam(value) {
+    // check limits for the value
     if (value > 0.5 && value < 2) {
-      this._brightnessParams = value;
+      this._brightnessParam = value;
     }
   }
 
