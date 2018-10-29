@@ -6,7 +6,8 @@
   "author": "Dmitry Volovod <dimazoll@shri2018.yaconnect.com>",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint src/script",
+    "lint": "tslint src/script",
+    "start": "parcel ./src/index.html",
     "build": "rimraf ./docs && parcel build --no-source-maps --no-cache -d docs ./src/index.html"
   },
   "devDependencies": {
