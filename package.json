@@ -1,18 +1,22 @@
 {
   "name": "SHRI-2018-2-hw2",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "app",
   "repository": "https://github.com/dimazollo/SHRI-2018-2-hw2.git",
   "author": "Dmitry Volovod <dimazoll@shri2018.yaconnect.com>",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint src/script",
+    "lint": "tslint src/script",
+    "start": "parcel ./src/index.html",
     "build": "rimraf ./docs && parcel build --no-source-maps --no-cache -d docs ./src/index.html"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/preset-env": "^7.1.0",
     "cssnano": "^4.1.4",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "tslint": "^5.11.0",
+    "tslint-config-airbnb-base": "^0.2.0",
+    "typescript": "^3.1.3"
   }
 }
